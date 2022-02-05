@@ -142,7 +142,7 @@ void setup()
   lcd.setCursor(0,1);
   lcd.print(" Arduino NEO-8M "); 
   lcd.setCursor(0,3);
-  lcd.print("  F1CJN-F4HSP");
+  lcd.print("  F1CJN-F4HSP-F6BUA");
 
 /*
   #if RST_PIN >= 0                // -------------------- version 1.3 pouce --------
@@ -276,8 +276,8 @@ void getgps(TinyGPSPlus2 &gps)
 {
   // Affichage --- Locator, latitude,longitude
   // -----------------------------------------
-  oled.set1X();
-/*  
+ /* 
+  oled.set1X(); 
   oled.setCursor(0,0);                  // OLED 128x64 - ligne 0
   oled.print(" Loc   ");                // ----- Locator 6 digits
   oled.print (locator[0]);  
