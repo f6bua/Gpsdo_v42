@@ -131,7 +131,9 @@ void setup()
   Wire.begin();
   Wire.setClock(400000L);     // vitesse transfert i2c , 400000L ou 400.000 Hz
 
-//  lcd.begin(16,4);        	  // ----- initialize the lcd for 16 chars 4 lines and turn on backlight
+  lcd.init();
+  lcd.backlight();
+  //  lcd.begin(16,4);        	  // ----- initialize the lcd for 16 chars 4 lines and turn on backlight
   lcd.begin(20,4);            // ----- initialize the lcd for 20 chars 4 lines and turn on backlight
 
   lcd.clear();
@@ -305,6 +307,7 @@ void getgps(TinyGPSPlus2 &gps)
   oled.print(" Long  ");  
   oled.print(gps.location.lng(),6);
 
+  
   lcd.setCursor(0,0);                   // LCD 4x16 - ligne 0 et 1
   lcd.print("Lat   ");                  // ----- Lat et Lon 
   lcd.print(gps.location.lat(),6); 
@@ -356,8 +359,7 @@ void getgps(TinyGPSPlus2 &gps)
   
   // Affichage --- Sat + Fix
   // -----------------------
-  satvustotal = (gps.GPsatvus.value() + gps.GLsatvus.value());      // Calcul de la variable satvustotal-----------------------------------------
-//  satvustotal = (gps.satvus.value() + gps.satvus.value());      // Calcul de la variable satvustotal    
+  satvustotal = (gps.GPsatvus.value() + gps.GLsatvus.value());      // Calcul de la variable satvustotal
   calcLocator(locator,gps.location.lat(),gps.location.lng());       // appel fonction "calcLocator"
   calcLocatorMH();                                                  // appel fonction "calcLocatorMH" 
   
