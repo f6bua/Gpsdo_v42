@@ -15,7 +15,7 @@
  *          
  *        - le choix d'afichage entre Locator sur 6 digits ou Locator MH sur 10 digits
  *        
- *         F1CJN  2016  /  F4HSP  2021   /   F6BUA 09-02-2022
+ *         F1CJN  2016  /  F4HSP  2021   /   F6BUA 06-02-2022
  * 
  * *********************************************************************************************************
  * 
@@ -108,7 +108,6 @@ void getgps(TinyGPSPlus2 &gps);
 // Traitement Latitude, longitude, locator, locator MH
 float latitude;
 float longitude;
-char locator[6];    // locator en  6 digits
 char MH[10];        // locator en 10 digits
 
 void setup()
@@ -174,7 +173,7 @@ void setup()
 
   digitalWrite(LED_loop, LOW);    // ----- turn Off the LED_loop
   lcd.clear();
- // oled.clear();
+  oled.clear();
 
 }
 
@@ -359,7 +358,7 @@ void getgps(TinyGPSPlus2 &gps)
   oled.setCursor(0,7);                  // OLED 128x64 - ligne 7                
   oled.print(" Loop  ");                // ----- Tension de boucle
   oled.print(U_loop,3);                 // affiche 3 chiffres après la virgule 
-  oled.print(" v ");                    // valeur en volts
+  oled.print(" V ");                    // valeur en volts
 
 }
 
