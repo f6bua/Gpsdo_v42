@@ -41,11 +41,11 @@
  * GPS TX connects to Software Serial pin 4 on the Arduino Nano
  * GPS VCC connects to 5 volts
  * 
- * Connections to the serial LCD 4x16 board
+ * Connections to the serial LCD 4x20 board
  * Arduino 5V to LCD 5V
  * Arduino GND to LCD GND
  * Arduino A4 to LCD SDA
- * Arduino A5 to CLD SCL
+ * Arduino A5 to LCD SCL
  * 
  * Serial O/P at 9600 ( or 115200 ) is used for test purposes 
  * 
@@ -75,12 +75,10 @@ SSD1306AsciiWire oled;    //
 SSD1306AsciiAvrI2c oled;
 */
 
-// LCD init pour afficheur 4 x 16
+// LCD init pour afficheur 4 x 20
 // Set the pins on the I2C chip used for LCD connections:
 //                    addr, en,rw,rs,d4,d5,d6,d7,bl,blpol
 
-// LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);        // ----- Set the LCD I2C address 0x27
-//LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);        // ----- Set the LCD I2C address 0x3F
 LiquidCrystal_I2C lcd(0x27,20,4);
 
 boolean gpsStatus[] = {false, false, false, false, false, false, false, false, false};
@@ -133,7 +131,6 @@ void setup()
 
   lcd.init();
   lcd.backlight();
-  //  lcd.begin(16,4);        	  // ----- initialize the lcd for 16 chars 4 lines and turn on backlight
   lcd.begin(20,4);            // ----- initialize the lcd for 20 chars 4 lines and turn on backlight
 
   lcd.clear();
@@ -186,37 +183,6 @@ void loop()
 smartDelay(1000);   // 1000 nearly 1.0s loop ... ( attention, une valeur plus faible peut limiter le nombre de trames NMEA traitées !!! )
 getgps(gps);       	// Get GPS parameters
 read_PLL();         // Lecture et traitement de la tension de boucle
-}
-
-
-void calcLocator(char *dst,float lat, float lng )     // Calcule le Locator ... sur 6 digits !
-{
-  int lon1, lon2, lon3;
-  int la1, la2, la3;
-  float reste;
-  
-  // longitude  
-  reste = lng + 180.0;
-  lon1 = int(reste / 20.0);
-  reste = reste - float(lon1) * 20.0;
-  lon2 = int(reste / 2.0);
-  reste = reste - 2.0 * float(lon2);
-  lon3 = int(12.0 * reste);
-
-  // latitude
-  reste = lat + 90.0;
-  la1 = int(reste / 10.0);
-  reste = reste - float(la1) * 10.0;
-  la2 = int(reste);
-  reste = reste - float(la2);
-  la3 = int(24.0 * reste);
-  
-  dst[0] = (char)lon1 + 65;
-  dst[1] = (char)la1 + 65;
-  dst[2] = (char)lon2 + 48;
-  dst[3] = (char)la2 + 48;
-  dst[4] = (char)lon3 + 65;     // 
-  dst[5] = (char)la3 + 65;      //
 }
 
 void calcLocatorMH()            // calcul le locator MH sur 10 digits !
@@ -277,16 +243,6 @@ void getgps(TinyGPSPlus2 &gps)
   // Affichage --- Locator, latitude,longitude
   // -----------------------------------------
   oled.set1X();
-/*  
-  oled.setCursor(0,0);                  // OLED 128x64 - ligne 0
-  oled.print(" Loc   ");                // ----- Locator 6 digits
-  oled.print (locator[0]);  
-  oled.print (locator[1]); 
-  oled.print (locator[2]); 
-  oled.print (locator[3]); 
-  oled.print (locator[4]); 
-  oled.println (locator[5]); 
-*/  
   oled.setCursor(0,0);                  // OLED 128x64 - ligne 0 
   oled.print(" Loc   ");                // ----- Locator MH 10 digits 
   oled.print (MH[0]); 
@@ -315,18 +271,21 @@ void getgps(TinyGPSPlus2 &gps)
   lcd.print("Lon   "); 
   lcd.print(gps.location.lng(),6);  
 
-  lcd.setCursor(10,3);                  // LCD 4x16 - ligne 3                 
-  lcd.print(locator[0]);                // ----- Locator 6 digits
-  lcd.print(locator[1]);
-  lcd.print(locator[2]);
-  lcd.print(locator[3]);
-  lcd.print(locator[4]);
-  lcd.print(locator[5]);
-
+  lcd.setCursor(10,3);                  // LCD 4x20 - ligne 3                 
+  lcd.print(MH[0]);                // ----- Locator 10 digits
+  lcd.print(MH[1]);
+  lcd.print(MH[2]);
+  lcd.print(MH[3]);
+  lcd.print(MH[4]);
+  lcd.print(MH[5]);
+  lcd.print(MH[6]);
+  lcd.print(MH[7]);
+  lcd.print(MH[8]);
+  lcd.print(MH[9]);
 
   // Affichage --- Heure 
   // -------------------
-  lcd.setCursor(0,2);                   // LCD 4x16 - ligne 2
+  lcd.setCursor(0,2);                   // LCD 4x20 - ligne 2
   lcd.print("Time  ");
       if (gps.time.hour() < 10)                     // Add a leading zero
         lcd.print("0");
@@ -360,7 +319,7 @@ void getgps(TinyGPSPlus2 &gps)
   // Affichage --- Sat + Fix
   // -----------------------
   satvustotal = (gps.GPsatvus.value() + gps.GLsatvus.value());      // Calcul de la variable satvustotal
-  calcLocator(locator,gps.location.lat(),gps.location.lng());       // appel fonction "calcLocator"
+ 
   calcLocatorMH();                                                  // appel fonction "calcLocatorMH" 
   
   lcd.setCursor(0,3);                     // LCD 4x16 - ligne 3 
