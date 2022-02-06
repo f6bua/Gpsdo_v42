@@ -262,9 +262,8 @@ void getgps(TinyGPSPlus2 &gps)
   oled.setCursor(0,2);
   oled.print(" Long  ");  
   oled.print(gps.location.lng(),6);
-*/
   
-  lcd.setCursor(0,0);                   // LCD 4x16 - ligne 0 et 1
+  lcd.setCursor(0,0);                   // LCD 4x20 - ligne 0 et 1
   lcd.print("Lat   ");                  // ----- Lat et Lon 
   lcd.print(gps.location.lat(),6); 
   lcd.setCursor(0,1);
