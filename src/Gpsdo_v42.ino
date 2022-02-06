@@ -15,7 +15,7 @@
  *          
  *        - le choix d'afichage entre Locator sur 6 digits ou Locator MH sur 10 digits
  *        
- *        Alain Fort F1CJN  November, 11, 2016     /   F4HSP  08 Octobre  2021
+ *         F1CJN  2016  /  F4HSP  2021   /   F6BUA 09-02-2022
  * 
  * *********************************************************************************************************
  * 
@@ -141,7 +141,7 @@ void setup()
   lcd.setCursor(0,3);
   lcd.print("  F1CJN-F4HSP-F6BUA");
 
-/*
+
   #if RST_PIN >= 0                // -------------------- version 1.3 pouce --------
     oled.begin(&SH1106_128x64, I2C_ADDRESS, RST_PIN);
   #else // RST_PIN >= 0
@@ -154,7 +154,7 @@ void setup()
   #else // RST_PIN >= 0
     oled.begin(&Adafruit128x64, I2C_ADDRESS);
   #endif // RST_PIN >= 0
-
+*/
 
   oled.setFont(Adafruit5x7);
 
@@ -167,7 +167,7 @@ void setup()
   oled.println(" Arduino NEO-8M");
   oled.setCursor(0,5);
   oled.println(" by F1CJN-F4HSP");
-*/
+
   digitalWrite(LED_loop, HIGH);    // ----- turn On the LED_loop
   
   delay(4000);  						// délai maintien de l'écran de démarrage pendant 4s
@@ -298,7 +298,7 @@ void getgps(TinyGPSPlus2 &gps)
         lcd.print("0");
   lcd.print(gps.time.second());
   lcd.print(" ");
-/*
+
   oled.setCursor(0,4);                  // OLED 128x64 - ligne 4
   oled.print(" Heure ");
       if (gps.time.hour() < 10)                     // Add a leading zero
@@ -313,7 +313,7 @@ void getgps(TinyGPSPlus2 &gps)
         oled.print("0");
   oled.print(gps.time.second());
   oled.print("   ");
-*/
+
   
   // Affichage --- Sat + Fix
   // -----------------------
@@ -340,7 +340,7 @@ void getgps(TinyGPSPlus2 &gps)
       }    
   else lcd.setCursor(7,3); lcd.print(satvustotal);  // Print variable ded satelittes vus total  
 
- /*
+ 
   oled.setCursor(0,5);                  // OLED 128x64 - ligne 5
   oled.print(" Sat   ");                // ----- Satellites et FIX
   if (gps.satellites.value() < 10)                          // Add a leading zero
@@ -352,15 +352,15 @@ void getgps(TinyGPSPlus2 &gps)
   oled.print(satvustotal);                                  // Print variable des satelittes vus ( GPS + Glonass )
   oled.print("    Fix ");                                   // valeur de la variable FIX
   oled.print(gps.satfix.value());                            
-*/
-/*
+
+
   // Affichage --- Tension Loop
   // --------------------------
   oled.setCursor(0,7);                  // OLED 128x64 - ligne 7                
   oled.print(" Loop  ");                // ----- Tension de boucle
   oled.print(U_loop,3);                                     // affiche 3 chiffres après la virgule 
   oled.print(" v ");                                        // valeur en volts
-*/
+
 }
 
 
