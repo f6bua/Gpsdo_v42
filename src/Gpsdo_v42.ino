@@ -322,23 +322,23 @@ void getgps(TinyGPSPlus2 &gps)
   calcLocatorMH();                                                  // appel fonction "calcLocatorMH" 
   
   lcd.setCursor(0,3);                     // LCD 4x16 - ligne 3 
-  lcd.print("Sat       ");                // ----- Satellites used
+  lcd.print("S       ");                // ----- Satellites used
   if (gps.satellites.value() < 10)                  
       {
-      lcd.setCursor(4,3);                           // Add a leading zero
+      lcd.setCursor(2,3);                           // Add a leading zero
       lcd.print("0"); 
       lcd.print(gps.satellites.value()); 
       }
   else lcd.setCursor(4,3); lcd.print(gps.satellites.value());   // sat used 
-  lcd.setCursor(6,3); 
+  lcd.setCursor(4,3); 
   lcd.print("/"); 
   if (satvustotal < 10)                             // test valeur de la variable Satellites Vus Total ( GPS + Glonass )
       {
-      lcd.setCursor(7,3);                           // Add a leading zero                           
+      lcd.setCursor(5,3);                           // Add a leading zero                           
       lcd.print("0"); 
       lcd.print(satvustotal); 
       }    
-  else lcd.setCursor(7,3); lcd.print(satvustotal);  // Print variable ded satelittes vus total  
+  else lcd.setCursor(5,3); lcd.print(satvustotal);  // Print variable ded satelittes vus total  
 
  
   oled.setCursor(0,5);                  // OLED 128x64 - ligne 5
@@ -358,8 +358,8 @@ void getgps(TinyGPSPlus2 &gps)
   // --------------------------
   oled.setCursor(0,7);                  // OLED 128x64 - ligne 7                
   oled.print(" Loop  ");                // ----- Tension de boucle
-  oled.print(U_loop,3);                                     // affiche 3 chiffres après la virgule 
-  oled.print(" v ");                                        // valeur en volts
+  oled.print(U_loop,3);                 // affiche 3 chiffres après la virgule 
+  oled.print(" v ");                    // valeur en volts
 
 }
 
